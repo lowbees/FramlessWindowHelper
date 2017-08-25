@@ -11,6 +11,14 @@ FramelessWindowHelper::FramelessWindowHelper(QQmlApplicationEngine *eg, QObject 
     if (eg) eg->rootContext()->setContextProperty("FramelessWindowHelper", this);
 }
 
+FramelessWindowHelper::~FramelessWindowHelper()
+{
+    QObjectList keys = windows.keys();
+    foreach (QObject *obj, keys) {
+        delete windows.value(obj);
+    }
+}
+
 void FramelessWindowHelper::addWindow(const QString &objName)
 {
     if (!engine || engine->rootObjects().isEmpty() || objName.isEmpty())
