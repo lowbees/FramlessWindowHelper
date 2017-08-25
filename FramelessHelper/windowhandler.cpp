@@ -52,9 +52,14 @@ void WindowHandler::checkOnEdges(const QPoint &pos)
 
 void WindowHandler::updateCursorShape(const QPoint &pos)
 {
-    if (!window || window->visibility() == QQuickWindow::FullScreen
-            || window->visibility() == QQuickWindow::Maximized)
+    if (!window)
         return;
+    if (window->visibility() == QQuickWindow::FullScreen
+            || window->visibility() == QQuickWindow::Maximized) {
+        while (QGuiApplication::overrideCursor())
+            QGuiApplication::restoreOverrideCursor();
+        return;
+    }
 
     checkOnEdges(pos);
     if (onTopLeft || onBottomRight) {
