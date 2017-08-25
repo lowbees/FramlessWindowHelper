@@ -12,9 +12,8 @@ class FramelessWindowHelper : public QObject
     Q_OBJECT
 public:
     explicit FramelessWindowHelper(QQmlApplicationEngine *eg, QObject *parent = 0);
-
-signals:
-
+    ~FramelessWindowHelper();
+    
 public slots:
     void addWindow(const QString &objName);
     void addWindow(QObject *obj);
