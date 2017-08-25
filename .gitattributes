@@ -1,0 +1,3 @@
+*.h linguist-language=QML
+*.cpp linguist-language=QML
+*.qmlm linguist-language=QML
