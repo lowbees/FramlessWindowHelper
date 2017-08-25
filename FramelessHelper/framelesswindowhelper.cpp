@@ -3,7 +3,6 @@
 
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <QDebug>
 
 FramelessWindowHelper::FramelessWindowHelper(QQmlApplicationEngine *eg, QObject *parent) :
     QObject(parent), engine(eg)
