@@ -4,8 +4,8 @@ QT += qml quick widgets
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    framelesswindowhelper.cpp \
-    windowhandler.cpp
+    framelesshelper/framelesswindowhelper.cpp \
+    framelesshelper/windowhandler.cpp
 
 RESOURCES += qml.qrc
 
@@ -32,5 +32,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    framelesswindowhelper.h \
-    windowhandler.h
+    framelesshelper/framelesswindowhelper.h \
+    framelesshelper/windowhandler.h
