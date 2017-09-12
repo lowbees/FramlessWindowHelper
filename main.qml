@@ -19,6 +19,14 @@ Window {
     FramelessWindowHelper {
 
     }
+    function updateWindow() {
+        var opacity = root.opacity
+        root.opacity = opacity - 0.01
+        root.opacity = opacity
+    }
+
+    onVisibilityChanged: updateWindow()
+    
     Rectangle {
         id: titleBar
         color: 'blue'
@@ -32,8 +40,10 @@ Window {
             property point pressPos
             onPressed: pressPos = Qt.point(mouse.x, mouse.y)
             onPositionChanged: {
-                root.x += mouse.x - pressPos.x
-                root.y += mouse.y - pressPos.y
+                if (root.visibility == Window.Windowed) {
+                    root.x += mouse.x - pressPos.x
+                    root.y += mouse.y - pressPos.y
+                }
             }
             onDoubleClicked: maxButton.clicked()
         }
