@@ -6,3 +6,6 @@
 1. 将FramelessHelper文件夹拷贝到你的目录，然后在main.cpp文件中包含FramelessWindowHelper.h文件
 2. main 函数示例，addWindow是关键，MainWindow为你想要进行缩放的qml窗口的objectName
 ![image](https://github.com/lowbees/images/blob/master/FramelessWindowHelper.png)
+
+# 2017/09/13更新 #
+现在在main函数中仅需qmlRegisterType注册C++类即可，更简洁！
