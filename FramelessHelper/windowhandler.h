@@ -37,17 +37,17 @@ private:
     void handleMouseReleaseEvent(QMouseEvent *e);
 
 private:
-    bool onLeft;
-    bool onTop;
-    bool onRight;
-    bool onBottom;
-    bool onTopLeft;
-    bool onTopRight;
-    bool onBottomLeft;
-    bool onBottomRight;
-    bool onEdges;
-    bool leftButtonPress;
-    bool resizing;
+    bool onLeft { false };
+    bool onTop { false };
+    bool onRight { false };
+    bool onBottom { false };
+    bool onTopLeft { false };
+    bool onTopRight { false };
+    bool onBottomLeft { false };
+    bool onBottomRight { false };
+    bool onEdges { false };
+    bool leftButtonPress { false };
+    bool resizing { false };
     int _edgeSize;
     QQuickWindow *window;
 };
