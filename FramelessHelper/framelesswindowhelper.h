@@ -3,26 +3,26 @@
 
 #include <QObject>
 #include <QQuickWindow>
+#include <QQmlParserStatus>
 
-class QQmlApplicationEngine;
 class WindowHandler;
 
-class FramelessWindowHelper : public QObject
+class FramelessWindowHelper : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
+    Q_INTERFACES(QQmlParserStatus)
 public:
-    explicit FramelessWindowHelper(QQmlApplicationEngine *eg, QObject *parent = 0);
+    explicit FramelessWindowHelper(QObject *parent = 0);
     ~FramelessWindowHelper();
     
-public slots:
-    void addWindow(const QString &objName);
-    void addWindow(QObject *obj);
+public:
+    void classBegin() Q_DECL_FINAL;
+    void componentComplete() Q_DECL_FINAL;    
     // QObject interface
 public:
     bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    QQmlApplicationEngine *engine;
     QHash<QObject*, WindowHandler*> windows;
 };
 
