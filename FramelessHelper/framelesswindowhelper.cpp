@@ -1,13 +1,10 @@
 ﻿#include "framelesswindowhelper.h"
 #include "windowhandler.h"
 
-#include <QQmlApplicationEngine>
-#include <QQmlContext>
 
-FramelessWindowHelper::FramelessWindowHelper(QQmlApplicationEngine *eg, QObject *parent) :
-    QObject(parent), engine(eg)
+FramelessWindowHelper::FramelessWindowHelper(QObject *parent) :
+    QObject(parent)
 {
-    if (eg) eg->rootContext()->setContextProperty("FramelessWindowHelper", this);
 }
 
 FramelessWindowHelper::~FramelessWindowHelper()
@@ -18,36 +15,31 @@ FramelessWindowHelper::~FramelessWindowHelper()
     }
 }
 
-void FramelessWindowHelper::addWindow(const QString &objName)
+void FramelessWindowHelper::classBegin()
 {
-    if (!engine || engine->rootObjects().isEmpty() || objName.isEmpty())
-        return;
 
-    for (int i = 0; i < engine->rootObjects().size(); ++i) {
-        QObject *rootObj = engine->rootObjects()[i];
+}
 
-        if (rootObj) {
-            if (rootObj->isWindowType() && !windows.contains(rootObj)) {
-                windows.insert(rootObj, new WindowHandler(qobject_cast<QQuickWindow*>(rootObj)));
-                rootObj->installEventFilter(this);
-            }
-
-            QObjectList objs = rootObj->findChildren<QObject*>(objName);
-            for (int j = 0; j < objs.size(); ++j) {
-                if (objs[j]->isWindowType() && !windows.contains(objs[j])) {
-                    windows.insert(objs[j], new WindowHandler(qobject_cast<QQuickWindow*>(objs[j])));
-                    objs[j]->installEventFilter(this);
+// 此段代码来自 https://github.com/qtdevs/FramelessHelper
+void FramelessWindowHelper::componentComplete()
+{
+    auto obj = parent();
+    while (Q_NULLPTR != obj) {
+        if (obj->inherits("QQuickRootItem")) {
+            if (auto rootItem = qobject_cast<QQuickItem *>(obj)) {
+                if (auto window = rootItem->window()) {
+                    if (!windows.contains(window)) {
+                        window->installEventFilter(this);
+                        windows.insert(window, new WindowHandler(window));
+                    }
+                    break;
                 }
             }
         }
+
+        obj = obj->parent();
     }
 }
-
-void FramelessWindowHelper::addWindow(QObject *obj)
-{
-    if (obj) addWindow(obj->objectName());
-}
-
 
 bool FramelessWindowHelper::eventFilter(QObject *watched, QEvent *event)
 {
