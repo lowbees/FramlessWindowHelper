@@ -1,6 +1,6 @@
 ﻿#include "framelesswindowhelper.h"
 #include "windowhandler.h"
-
+#include <QQuickItem>
 
 FramelessWindowHelper::FramelessWindowHelper(QObject *parent) :
     QObject(parent)
