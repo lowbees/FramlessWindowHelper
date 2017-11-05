@@ -160,6 +160,8 @@ void WindowHandler::handleMousePressEvent(QMouseEvent *e)
 
 void WindowHandler::handleMouseMoveEvent(QMouseEvent *e)
 {
+    if (window && window->visibility() == QWindow::Maximized)
+        return;
     if (leftButtonPress) {
         if (onEdges) {
             resizing = true;
